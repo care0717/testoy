@@ -24,4 +24,6 @@ jobs:
       - run: |
           echo "${{ github.event.action }}"
           echo "${{ github.event.pull_request.merged }}"
-          echo "${{ github.event.action != 'closed'}} ${{ github.event.pull_request.merged == 'true' }}"
+          echo "${{ github.event.action != 'closed'}} ${{ github.event.pull_request.merged }}"
+          echo "${{ github.ref }}"
+          echo "${{ github.ref == 'main' }}"
