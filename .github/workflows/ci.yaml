@@ -24,4 +24,25 @@ jobs:
       - run: |
           echo "${{ github.event.action }}"
           echo "${{ github.event.pull_request.merged }}"
-          echo "${{ github.event.action != 'closed'}} ${{ github.event.pull_request.merged == 'true' }}"
+          echo "${{ github.event.action != 'closed'}} ${{ github.event.pull_request.merged }}"
+          echo "${{ github.ref }}"
+          echo "${{ github.ref == 'main' }}"
+  fail:
+    name: Fail test
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "success"
+      - run: |
+          exit 1
+      - run: |
+          echo "failed after success"
+
+  need-failed-jobs:
+    name: Need failed job
+    needs:
+      - fail
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "need failed job"
