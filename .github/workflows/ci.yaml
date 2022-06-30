@@ -33,7 +33,8 @@ jobs:
     steps:
       - run: |
           echo "success"
-      - run: |
+      - continue-on-error: true
+        run: |
           exit 1
       - run: |
           echo "failed after success"
