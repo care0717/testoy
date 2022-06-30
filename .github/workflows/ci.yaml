@@ -48,22 +48,8 @@ jobs:
       - run: |
           echo "need failed job"
 
-  upload-file:
-    name: upload file
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo ${GITHUB_SHA} > cover.out
-      - name: Upload cover.out
-        uses: actions/upload-artifact@v3
-        with:
-          name: cover_out
-          path: cover.out
-
   download-file:
     name: download file
-    needs:
-      - upload-file
     runs-on: ubuntu-latest
     steps:
       - name: Download cover.out
