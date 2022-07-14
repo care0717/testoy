@@ -27,3 +27,68 @@ jobs:
           echo "${{ github.event.action != 'closed'}} ${{ github.event.pull_request.merged }}"
           echo "${{ github.ref }}"
           echo "${{ github.ref == 'main' }}"
+  fail:
+    name: Fail test
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "success"
+      - continue-on-error: true
+        run: |
+          exit 1
+      - run: |
+          echo "failed after success"
+
+  need-failed-jobs:
+    name: Need failed job
+    needs:
+      - fail
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "need failed job"
+
+  upload-file:
+    name: upload file
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo ${GITHUB_SHA} > cover.out
+      - name: Upload cover.out
+        uses: actions/upload-artifact@v3
+        with:
+          name: cover_out
+          path: cover.out
+
+  download-file:
+    name: download file
+    needs:
+      - upload-file
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download cover.out
+        uses: actions/download-artifact@v3
+        with:
+          name: cover_out
+      - run: |
+          cat cover.out
+
+  checkout-test:
+    name: checkout test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout dagdig
+        uses: actions/checkout@v3
+        with:
+          repository: care0717/dagdig
+          path: care0717.dagdig
+      - name: hoge
+        run: |
+          ls
+          pwd
+
+      - name: aaa
+        working-directory: "care0717.dagdig"
+        run: |
+          ls
+        
