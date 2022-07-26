@@ -3,7 +3,11 @@ on:
   release:
     types:
       - created
-
+  push:
+    tags-ignore:
+      - "**"
+    branches:
+      - main
 
 jobs:
   dump:
@@ -14,3 +18,12 @@ jobs:
     steps:
       - run: |
           echo "$GITHUB_CONTEXT"
+      - run: |
+          if ${{ github.event_name == 'release' }} -eq true ; then
+            VERSION=$(echo ${{ github.ref }} | sed -e "s#refs/tags/##g")
+            PUBLISH_PATH="release/${VERSION}"
+          else
+            BRANCH=$(echo ${{ github.ref }} | sed -e "s#refs/heads/##g")
+            PUBLISH_PATH="${BRANCH}"
+          fi
+          echo $PUBLISH_PATH
