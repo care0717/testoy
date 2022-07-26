@@ -9,6 +9,7 @@ on:
     types:
       - created
 
+
 jobs:
   dump:
     name: Dump GitHub context
