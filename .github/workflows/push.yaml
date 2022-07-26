@@ -1,0 +1,20 @@
+name: push
+on:
+  push:
+    tags-ignore:
+      - "**"
+    branches:
+      - 'main'
+  release:
+    types:
+      - created
+
+jobs:
+  dump:
+    name: Dump GitHub context
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+    steps:
+      - run: |
+          echo "$GITHUB_CONTEXT"
