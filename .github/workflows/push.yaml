@@ -1,10 +1,5 @@
 name: push
 on:
-  push:
-    tags-ignore:
-      - "**"
-    branches:
-      - 'main'
   release:
     types:
       - created
