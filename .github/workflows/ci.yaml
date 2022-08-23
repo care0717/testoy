@@ -24,7 +24,7 @@ jobs:
       - run: |
           echo "${{ github.event.action }}"
           echo "${{ github.event.pull_request.merged }}"
-          echo "${{ github.event.action != 'closed'}} ${{ (github.event.pull_request.merged && github.ref == 'main') }}"
-          echo "${{ github.event.action != 'closed' && (github.event.pull_request.merged && github.ref == 'main') }}"
+          echo "github.event.action != 'closed' ${{ github.event.action != 'closed'}} github.event.pull_request.merged && github.ref == 'main' ${{ (github.event.pull_request.merged && github.ref == 'main') }}"
+          echo "実際の条件 ${{ github.event.action != 'closed' || (github.event.pull_request.merged && github.ref == 'main') }}"
           echo "${{ github.ref }}"
           echo "${{ github.ref == 'main' }}"
